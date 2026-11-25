@@ -75,7 +75,7 @@ body { margin:0; padding:0 }
   to { opacity:1; stroke-dashoffset:0 }
 }
 #buku-sndiy .link, #buku-sndiy main a { display:inline-block; padding:8px 0; color:var(--pen); text-decoration:underline; text-underline-offset:4px }
-#buku-sndiy .pocket { position:relative; display:grid; container-type:inline-size; isolation:isolate; break-inside:avoid; margin:calc(var(--pitch) / 2) auto .55rem; --pocket-height:clamp(12.8rem,42vw,20rem); min-height:var(--pocket-height); max-width:34rem; --peek:3.3rem; --lift:0; }
+#buku-sndiy .pocket { position:relative; display:grid; container-type:inline-size; isolation:isolate; break-inside:avoid; margin:calc(var(--pitch) / 2) auto .55rem; --pocket-height:clamp(14.8rem,44vw,20rem); min-height:var(--pocket-height); max-width:34rem; --peek:3.3rem; --lift:0; }
 #buku-sndiy .print-stage { position:absolute; inset:2% 2% auto; height:calc(var(--pocket-height) * .98 - var(--peek) - 2.6rem); container-type:size; display:grid; place-items:end center }
 #buku-sndiy .print-stage :is(.print,.stack-layer) { width:min(var(--print-width),94cqw,calc(90cqh * var(--photo-ratio))); }
 #buku-sndiy .print { --tilt:-2deg; position:relative; aspect-ratio:var(--photo-ratio); margin:0; border:1px solid transparent; transform:rotate(var(--tilt)) }
@@ -399,10 +399,7 @@ html.photo-open { overflow:hidden }
   #buku-sndiy .signature { width:9rem }
   #buku-sndiy .portrait-mount .print-label { inset:100% auto auto 50%; width:max-content; transform:translateX(-50%) }
   #buku-sndiy .portrait-mount .photo-hint { display:none }
-  #buku-sndiy .pocket { margin-block:.3rem; --pocket-height:12rem; --peek:2.75rem }
-  #buku-sndiy .insert { --insert-leading:clamp(.95rem,4.6cqw,1.25rem) }
-  #buku-sndiy .handle { font-size:clamp(.75rem,4.2cqw,.92rem) }
-  #buku-sndiy .insert-text { font-size:clamp(.72rem,3.9cqw,.88rem) }
+  #buku-sndiy .pocket { margin-block:.3rem; --pocket-height:clamp(14.8rem,76vw,16.5rem) }
 }
 
 @media (max-width:22rem) {
@@ -423,7 +420,7 @@ html.photo-open { overflow:hidden }
   #buku-sndiy .index-print { width:62%; margin-block:calc(var(--pitch) / 3) 1.85rem }
   #buku-sndiy .index-print .photo-hint { display:inline-flex }
   #buku-sndiy .contents { margin-top:calc(var(--pitch) / 2) }
-  #buku-sndiy .pocket { --pocket-height:11.6rem; --peek:2.6rem }
+  #buku-sndiy .pocket { --pocket-height:14.8rem }
   #buku-sndiy .page-controls button { font-size:0 }
   #buku-sndiy .page-controls button::before { font:1rem/1 var(--body) }
   #buku-sndiy .page-controls [data-turn="-1"]::before { content:"\2190" }
