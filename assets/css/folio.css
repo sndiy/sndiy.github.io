@@ -1,0 +1,503 @@
+#buku-sndiy { --ink:#34312c; --pen:#273f70; --paper:#f6efde; --rule:#c4baa4; --pitch:2.125rem; --body:"Segoe UI",system-ui,Arial,sans-serif; --hand:"Coming Soon","Segoe Print","Chalkboard SE",var(--body); --type:"Courier New",monospace; color:var(--ink); font:1rem/1.55 var(--body); }
+html {
+  --folio-styled:1;
+  /* Skala serat mengikuti lebar folio sampai ukuran cetak maksimum. */
+  --wood-size:min(112vw,54rem);
+  margin:0; padding:0;
+  background-color:#524a43;
+  background-image:radial-gradient(ellipse 55rem 48rem at 42% 0%,#f6efde12,transparent),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='864' height='512'%3E%3Cfilter id='grain' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.005 .055' numOctaves='3' stitchTiles='stitch' result='grain'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018 .32' numOctaves='2' stitchTiles='stitch'/%3E%3CfeComposite in2='grain' operator='arithmetic' k2='.3' k3='.7'/%3E%3CfeColorMatrix values='.3 0 0 0 .35 .3 0 0 0 .35 .3 0 0 0 .35 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  background-blend-mode:normal,soft-light;
+  background-size:auto,var(--wood-size) auto;
+  background-position:top center;
+  background-repeat:no-repeat,repeat;
+}
+body { margin:0; padding:0 }
+#buku-sndiy {
+  min-height:100vh; box-sizing:border-box;
+  padding:clamp(12px,3.5%,42px) clamp(7px,2.5%,42px);
+}
+#buku-sndiy .folio-frame { inline-size:min(100%,720px); margin-inline:auto; container-type:inline-size }
+#buku-sndiy .folio { --left-edge:calc(100% * 25 / 210); --right-edge:calc(100% * 17 / 210); --folio-rule:24px; position:relative; inline-size:100%; min-block-size:var(--folio-height,auto); display:grid; grid-template-rows:clamp(27px,7cqw,51px) minmax(0,1fr) max(48px,5.45%); background:var(--paper); border-radius:1px 3px 2px 1px; box-shadow:0 5px 17px #16151260,0 1px 2px #16151280; overflow-wrap:anywhere; container:folio / inline-size }
+#buku-sndiy.paginated .folio { aspect-ratio:210 / 330; block-size:var(--folio-height,auto) }
+#buku-sndiy .ruling { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+#buku-sndiy.paginated .sheets { block-size:var(--column-height,100%); min-block-size:0; column-count:1; column-fill:auto; column-gap:0; overflow:hidden; }
+#buku-sndiy .sheets h1, #buku-sndiy .sheets h2 { break-after:avoid }
+#buku-sndiy .sheets p { widows:2; orphans:2 }
+#buku-sndiy .page-controls { position:absolute; inset:auto var(--right-edge) .25rem var(--left-edge); display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:.4rem; color:var(--pen); font:.85rem/1.3 var(--type); text-align:center }
+#buku-sndiy .page-controls button:first-child { justify-self:start }
+#buku-sndiy .page-controls button:last-child { justify-self:end }
+#buku-sndiy .page-controls button { min-width:44px; min-height:44px; padding:.25rem .55rem; border:1px solid var(--pen); border-radius:3px; background:var(--paper); color:var(--pen); font:inherit }
+#buku-sndiy .page-controls button:disabled { opacity:.3; cursor:default }
+#buku-sndiy .page-controls button:focus-visible { outline:2px solid var(--pen); outline-offset:-3px }
+#buku-sndiy main { container:writing / inline-size }
+#buku-sndiy * { box-sizing:border-box }
+#buku-sndiy [hidden] { display:none !important }
+#buku-sndiy .project-nav { position:relative; grid-row:1; display:flex; align-items:center; padding-inline:var(--left-edge) var(--right-edge) }
+#buku-sndiy .project-nav .link { display:inline-flex; align-items:center; min-height:44px; font:600 .82rem/1.35 var(--body) }
+#buku-sndiy .folio:has(.project-nav a:not([hidden])) { grid-template-rows:max(44px,7cqw) minmax(0,1fr) max(48px,5.45%) }
+#buku-sndiy button { font:inherit; color:inherit; background:transparent; border:0; cursor:pointer }
+#buku-sndiy :is(button,a):focus-visible { outline:2px solid var(--pen); outline-offset:-2px }
+#buku-sndiy .paper-tabs { width:min(100%,720px); margin-inline:auto; padding-inline:min(10%,72px) min(4%,29px); display:flex; justify-content:flex-start; align-items:end; gap:clamp(3px,1%,7px); position:relative; z-index:1 }
+#buku-sndiy .paper-tabs a { display:grid; place-items:center; text-align:center; text-decoration:none; position:relative; flex:0 1 8rem; min-width:0; min-height:44px; padding:.65rem .25rem .4rem; border-radius:8px 10px 0 0; background:#dfcfac; color:#484138; box-shadow:inset 0 -5px 5px -5px #715e40; font:500 max(15px,1rem)/1.3 var(--body); }
+#buku-sndiy .paper-tabs a[aria-current="page"] { min-height:48px; background:var(--paper); color:var(--pen); box-shadow:none; }
+#buku-sndiy .paper-tabs a[aria-current="page"]::after { content:""; position:absolute; bottom:4px; left:50%; width:1.8rem; height:2px; background:var(--pen); border-radius:60%; transform:translateX(-50%) rotate(-3deg) }
+#buku-sndiy .paper-tabs a:focus-visible { outline:2px solid var(--pen); outline-offset:-4px }
+#buku-sndiy main { min-height:0; grid-row:2; padding:calc(var(--folio-rule) * .75) var(--right-edge) 0 var(--left-edge) }
+#buku-sndiy main { position:relative }
+#buku-sndiy main h1, #buku-sndiy main h2, #buku-sndiy main p { font-family:var(--hand); font-weight:400; color:var(--pen); margin:0 }
+#buku-sndiy main h1 { font-size:clamp(1.8rem,5.5vw,2.75rem); line-height:calc(2 * var(--pitch)); margin-bottom:calc(var(--pitch) / 2) }
+#buku-sndiy main h2 { font-size:max(20px,1.4rem); font-weight:600; line-height:var(--pitch) }
+#buku-sndiy main p { color:var(--ink); font-size:max(17px,1.0625rem); line-height:var(--pitch); max-width:46ch }
+#buku-sndiy .ruled { position:relative; top:var(--nudge,0px) }
+#buku-sndiy .baseline { display:inline-block; width:0; height:0; vertical-align:baseline }
+#buku-sndiy .signature { display:block; width:min(100%,12rem); height:auto; color:var(--pen) }
+#buku-sndiy .signature-name { position:absolute; width:1px; height:1px; clip-path:inset(50%); overflow:hidden }
+#buku-sndiy .home-copy .project-invitation { font-size:.95rem }
+#buku-sndiy .project-invitation a { display:inline; padding:0 }
+#buku-sndiy .contact-card p { font:1rem/1.45 var(--hand); margin:0 0 .45rem }
+#buku-sndiy .signature path { fill:none; stroke:currentColor; stroke-width:2.85; stroke-linecap:round; stroke-linejoin:round }
+#buku-sndiy .signature .initial-down { --start:30ms; --duration:105ms; stroke-width:3.4 }
+#buku-sndiy .signature .initial-cross { --start:155ms; --duration:65ms; stroke-width:2.2 }
+#buku-sndiy .signature .initial-up { --start:235ms; --duration:90ms; stroke-width:3.15 }
+#buku-sndiy .signature .name-start { --start:325ms; --duration:225ms }
+#buku-sndiy .signature .name-end { --start:550ms; --duration:270ms }
+#buku-sndiy .signature .signoff { --start:850ms; --duration:155ms; stroke-width:1.7 }
+@media (prefers-reduced-motion:no-preference) and (update:fast) {
+  #buku-sndiy.paginated .signature path {
+    stroke-dasharray:1;
+    animation:buku-write var(--duration) cubic-bezier(.35,.12,.62,.94) var(--start) both;
+  }
+}
+@keyframes buku-write {
+  from { opacity:0; stroke-dashoffset:1 }
+  2% { opacity:1 }
+  to { opacity:1; stroke-dashoffset:0 }
+}
+#buku-sndiy .link, #buku-sndiy main a { display:inline-block; padding:8px 0; color:var(--pen); text-decoration:underline; text-underline-offset:4px }
+#buku-sndiy .pocket { position:relative; isolation:isolate; break-inside:avoid; margin:calc(var(--pitch) / 2) auto .55rem; height:min(clamp(12.8rem,42vw,20rem),var(--column-height,20rem)); max-width:34rem; --peek:3.3rem; --lift:0; }
+#buku-sndiy .print-stage { position:relative; top:2%; margin-inline:2%; height:calc(98% - var(--peek) - 2.6rem); container-type:size; display:grid; place-items:end center }
+#buku-sndiy .print-stage :is(.print,.stack-layer) { width:min(var(--print-width),94cqw,calc(90cqh * var(--photo-ratio))); }
+#buku-sndiy .print { --tilt:-2deg; position:relative; aspect-ratio:var(--photo-ratio); margin:0; border:1px solid transparent; transform:rotate(var(--tilt)) }
+#buku-sndiy .stack-layer { position:absolute; left:50%; bottom:5px; z-index:-1; aspect-ratio:var(--photo-ratio); object-fit:contain; padding:3px; background:#f5efdf; border:1px solid #c7bda9; box-shadow:1px 2px 3px #483d2c30; transform:translateX(-48%) rotate(4deg) }
+#buku-sndiy .stack-layer + .stack-layer { z-index:-2; bottom:8px; transform:translateX(-52%) rotate(-2deg) }
+#buku-sndiy .photo-trigger { display:block; width:100%; height:100%; padding:0; cursor:zoom-in; text-align:left }
+#buku-sndiy .print-window { display:block; position:relative; width:100%; aspect-ratio:var(--photo-ratio); background:#faf6e9 }
+#buku-sndiy .print .print-window { outline:1px solid #d5cdb9; box-shadow:2px 4px 7px #483d2c30 }
+#buku-sndiy .portrait-mount .print { --tilt:0deg }
+#buku-sndiy .print-window img { position:absolute; left:2%; top:2%; width:96%; height:96%; object-fit:contain; background:#eee9da }
+#buku-sndiy :is(.portrait-mount,.enlargement.portrait) img { object-fit:cover }
+#buku-sndiy .print-label { position:absolute; inset:100% 0 auto; display:flex; gap:.45rem; align-items:baseline; justify-content:space-between; padding:.25rem 0; }
+#buku-sndiy .photo-caption,#buku-sndiy .enlargement figcaption { color:#3d3b34; font:1rem/1.35 var(--hand) }
+#buku-sndiy .photo-hint { color:var(--pen); font:.85rem/1.3 var(--body); text-decoration:underline }
+#buku-sndiy .zoom-mark { width:1.15rem; height:1.15rem; display:block }
+#buku-sndiy .stacked .zoom-mark { display:none }
+#buku-sndiy .photo-view { position:fixed; inset:0; width:100%; height:100%; max-width:none; max-height:none; box-sizing:border-box; padding:12px; border:0; margin:0; background:transparent; color:var(--ink) }
+#buku-sndiy .photo-view[open] { display:grid; justify-items:center; align-content:center }
+#buku-sndiy .photo-view::backdrop { background:transparent }
+#buku-sndiy .photo-view[open] { background-color:rgba(29,23,18,.85) }
+#buku-sndiy .photo-view.returning { background-color:transparent }
+#buku-sndiy .photo-view.returning :is(figcaption,.photo-close) { opacity:0 }
+@media (prefers-reduced-motion:no-preference) and (update:fast) {
+  #buku-sndiy .photo-view { transition:background-color var(--return-time,240ms) ease-out }
+  @starting-style { #buku-sndiy .photo-view[open] { background-color:transparent } }
+  #buku-sndiy .photo-view :is(figcaption,.photo-close) { transition:opacity 100ms ease-out }
+  #buku-sndiy .enlargement .print-window { transition:box-shadow var(--return-time,240ms) ease-out }
+}
+#buku-sndiy .enlargement { width:min(100%,56rem,calc(max(5rem,100vh - 9rem) * var(--photo-ratio))); width:min(100%,56rem,calc(max(5rem,100dvh - 9rem) * var(--photo-ratio))); margin:0; min-height:0; }
+#buku-sndiy .enlargement .print-window { box-shadow:0 15px 50px #0007 }
+#buku-sndiy :is(.single-photo,.album-photo,.photo-view) { touch-action:pan-x pan-y }
+#buku-sndiy .returning .enlargement .print-window { box-shadow:0 1px 3px #0002 }
+#buku-sndiy .enlargement figcaption { position:relative; left:50%; transform:translateX(-50%); width:min(48ch,calc(100vw - 2.5rem)); margin:.65rem 0 0; color:var(--paper); text-align:center; text-wrap:balance; line-height:1.5; text-shadow:0 1px 3px #211a14; overflow-wrap:anywhere }
+#buku-sndiy .album-photo img { display:block; width:100%; aspect-ratio:var(--photo-ratio); object-fit:contain }
+#buku-sndiy .photo-close { position:absolute; top:max(8px,env(safe-area-inset-top)); right:max(8px,env(safe-area-inset-right)); z-index:1; width:44px; height:44px; display:grid; place-items:center; padding:0; border-radius:50%; background:#29251ee6; color:var(--paper); font:1.65rem/1 var(--body) }
+#buku-sndiy .photo-close:focus-visible { outline-color:var(--paper) }
+html { scrollbar-gutter:stable }
+html.photo-open { overflow:hidden }
+#buku-sndiy .lifted .print-window, #buku-sndiy .album-photo.lifted,
+#buku-sndiy .spread-out :is(.print-window,.stack-layer) { visibility:hidden }
+#buku-sndiy .album { width:min(52rem,calc(100% - 1.25rem)); max-width:100%; max-height:88vh; max-height:88dvh; margin:auto; padding:0; border:1px solid #c7bda9; background:var(--paper); color:var(--ink); box-shadow:0 12px 48px #241b1555; overflow:hidden }
+#buku-sndiy .album[open] { display:flex; flex-direction:column }
+#buku-sndiy :is(.album,.photo-view):not([open]) { display:none }
+#buku-sndiy .album::backdrop { background:#211a14bf }
+#buku-sndiy .album-bar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.25rem 1rem; padding:.65rem 1rem; border-bottom:1px solid var(--rule) }
+#buku-sndiy .album-bar h2 { margin:0; color:var(--pen); font:1.35rem/1.3 var(--hand) }
+#buku-sndiy .album-close { min-height:44px; color:var(--pen); text-decoration:underline }
+#buku-sndiy .album-grid { margin:0; padding:clamp(.8rem,3vw,1.5rem); overflow-y:auto; overscroll-behavior:contain; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,9rem),1fr)); align-content:start; gap:clamp(.65rem,2vw,1.15rem) }
+#buku-sndiy .album-entry { min-width:0; margin:0; color:var(--pen); font:1rem/1.35 var(--hand) }
+#buku-sndiy .album-mount { aspect-ratio:1; display:grid; align-items:end; justify-items:center }
+#buku-sndiy .album-entry figcaption { margin-top:.6rem; text-align:center }
+#buku-sndiy .album-photo { width:min(100%,calc(100% * var(--photo-ratio))); min-width:0; padding:.3rem; background:#faf6e9; border:1px solid #d5cdb9; box-shadow:1px 2px 4px #483d2c24; cursor:zoom-in }
+@media (prefers-reduced-motion:no-preference) and (update:fast) {
+  #buku-sndiy .album[open] .album-photo { animation:place-print 145ms ease-out var(--place-delay,0ms) backwards }
+  @keyframes place-print { from { translate:0 -3px } }
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) and (update:fast) {
+  #buku-sndiy.paginated :is(.print:not(.lifted) .print-window,.album-photo) {
+    transform-origin:50% 90%;
+    transition:scale 220ms ease-out, box-shadow 220ms ease-out;
+  }
+  #buku-sndiy.paginated :is(.print:not(.stacked,.lifted) .print-window:hover,.stacked:not(.lifted) .photo-trigger:hover .print-window,.album-photo:hover) {
+    scale:1.025;
+    box-shadow:3px 7px 11px #483d2c3b;
+  }
+  #buku-sndiy .stack-layer { transition:translate 260ms ease-out, rotate 260ms ease-out, box-shadow 260ms ease-out }
+  #buku-sndiy .stack-layer + .stack-layer { transition-duration:310ms }
+  #buku-sndiy .stacked .photo-trigger:hover .stack-layer {
+    translate:8px -5px;
+    rotate:3deg;
+    box-shadow:2px 5px 7px #483d2c38;
+  }
+  #buku-sndiy .stacked .photo-trigger:hover .stack-layer + .stack-layer {
+    translate:-7px -9px;
+    rotate:-3deg;
+  }
+}
+#buku-sndiy .project-note h2 { margin-top:var(--pitch) }
+#buku-sndiy .opening { position:absolute; inset:0; overflow:hidden; pointer-events:none }
+#buku-sndiy .insert { --rule-offset:20px; pointer-events:auto; position:absolute; inset:3px 4% 0; display:grid; grid-template-rows:auto minmax(0,1fr); padding:0 5% .55rem; color:#233f4a; background-color:#dce8e7; background-image:repeating-linear-gradient(to bottom,#7e9aa438 var(--rule-offset) calc(var(--rule-offset) + 1px),transparent calc(var(--rule-offset) + 1px) calc(var(--rule-offset) + var(--folio-rule))); box-shadow:1px 2px 7px #342e264f; border:1px solid #aabfc0; border-radius:2px 3px 0 0; transform:translateY(calc((1 - var(--lift)) * (100% - var(--peek)) - var(--hint,0px))); }
+@media (prefers-reduced-motion:no-preference) and (update:fast) { #buku-sndiy .pocket:not(.dragging) .insert { transition:transform 420ms cubic-bezier(.22,.72,.2,1) } }
+#buku-sndiy .handle { display:block; width:100%; height:var(--peek); padding:0; color:#234754; text-align:left; touch-action:none; user-select:none; cursor:grab; font:400 max(17px,1.0625rem)/1.3 var(--hand); }
+#buku-sndiy .dragging .handle {cursor:grabbing}
+@media(hover:hover) and (prefers-reduced-motion:no-preference) and (update:fast) { #buku-sndiy .pocket:not(.dragging):not(.opened) .insert:has(.handle:hover) { --hint:4px } }
+
+#buku-sndiy .pocket::after { content:""; pointer-events:none; position:absolute; inset:auto 0 -3px; height:7px; background:linear-gradient(#514238,#756554 55%,#cfbfa4 75%,var(--paper)); clip-path:polygon(0 50%,5% 40%,10% 65%,16% 27%,19% 40%,30% 20%,36% 55%,43% 24%,49% 53%,56% 25%,64% 55%,70% 30%,77% 58%,85% 27%,92% 48%,100% 35%,99% 82%,71% 89%,50% 80%,25% 95%,2% 86%) }
+#buku-sndiy .insert-text { min-height:0; overflow:auto; font:max(18px,1.125rem)/var(--pitch) var(--hand); background:transparent; }
+#buku-sndiy .insert-text:focus-visible { outline:2px solid var(--pen); outline-offset:-2px }
+#buku-sndiy button, #buku-sndiy nav { max-inline-size:100%; overflow-wrap:anywhere }
+#buku-sndiy .font-probe { position:absolute; width:1rem; height:1em; visibility:hidden; pointer-events:none }
+#buku-sndiy .photo-view[open] .enlargement { max-width:min(100%,72rem) }
+
+#buku-sndiy:not(.paginated) .folio { min-block-size:157.142857cqw; grid-template-rows:48px auto 48px }
+#buku-sndiy:not(.paginated) .project-note { margin-block-start:var(--pitch) }
+@supports selector(:has(:target)) {
+  #buku-sndiy:not(.paginated) .folio:has(#daftar-isi) {
+    block-size:157.142857cqw;
+    grid-template-rows:clamp(27px,7cqw,51px) minmax(0,1fr) 2rem;
+  }
+  #buku-sndiy:not(.paginated) main:has(#daftar-isi) { overflow:auto; scrollbar-gutter:stable }
+  #buku-sndiy:not(.paginated) .sheets:has(#daftar-isi) .project-note:not(:target),
+  #buku-sndiy:not(.paginated) .sheets:has(.project-note:target) #daftar-isi { display:none }
+}
+#buku-sndiy .desk-note {
+  width:min(100%,720px); margin:0 auto 1rem; padding-inline:.35rem;
+  display:flex; justify-content:flex-end; filter:drop-shadow(1px 3px 2px #211a1459);
+}
+#buku-sndiy .reading-note {
+  width:13rem; max-width:100%; margin:0; padding:.75rem 1rem .85rem;
+  background:linear-gradient(105deg,#f5e9ce,#efe0bd 74%,#e6d4ad);
+  color:var(--ink); font:.94rem/1.5 var(--hand); transform:rotate(-1deg);
+  clip-path:polygon(0 2%,99.5% 0,100% 95%,94% 97%,87% 96%,78% 99%,69% 97%,56% 99%,45% 97%,34% 100%,21% 97%,9% 99%,.5% 96%);
+}
+/* Ruang samping cukup untuk folio 720px, jarak meja, dan secarik pesan. */
+@media (min-width:calc(720px + 32rem)) {
+  #buku-sndiy:not(.paginated) { position:relative }
+  #buku-sndiy .desk-note {
+    position:absolute; top:calc(42px + 48px); left:calc(50% + 360px + 1rem);
+    width:13rem; margin:0; padding:0;
+  }
+}
+#buku-sndiy .project-fallback img { display:block; max-width:min(100%,20rem); max-height:17rem; width:auto; height:auto }
+#buku-sndiy .photo-mount { break-inside:avoid }
+#buku-sndiy main a.photo-trigger { display:block; padding:0; text-decoration:none }
+#buku-sndiy .stack-layer { pointer-events:none }
+#buku-sndiy .print-stage .print-label {
+  inset:100% auto auto 50%;
+  width:min(15.5rem,85cqw);
+  transform:translateX(-50%);
+  align-items:center;
+}
+#buku-sndiy .print-stage .photo-count { white-space:nowrap }
+#buku-sndiy .print-stage .photo-caption { overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+
+/* Beranda */
+#buku-sndiy .home-copy p { max-width:32ch }
+#buku-sndiy .home-copy .link { display:inline-flex; align-items:center; min-height:44px; font:.94rem/1.4 var(--type) }
+#buku-sndiy .portrait-mount {
+  width:min(65%,13rem);
+  margin:var(--pitch) auto 0;
+  padding-bottom:2rem;
+  break-inside:avoid;
+}
+
+/* Daftar isi */
+#buku-sndiy .contents { margin:calc(var(--pitch) / 2) 0 0; padding:0; list-style:none }
+#buku-sndiy .contents li { break-inside:avoid }
+#buku-sndiy .contents li > a {
+  display:grid;
+  min-height:44px;
+  padding:calc(var(--pitch) / 4) 0;
+  text-decoration:none;
+}
+#buku-sndiy .contents strong {
+  color:var(--pen);
+  font:600 max(18px,1.125rem)/var(--pitch) var(--hand);
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:.17em;
+}
+@media (hover:hover) { #buku-sndiy .contents li > a:hover { background:#53432218 } }
+#buku-sndiy .index-print {
+  width:min(72%,18rem);
+  margin:var(--pitch) auto 2.7rem clamp(.65rem,5%,2rem);
+  break-inside:avoid;
+}
+
+/* Detail karya */
+#buku-sndiy .editor-example { break-inside:avoid; padding-bottom:calc(var(--pitch) / 2) }
+#buku-sndiy .editor-example .index-print { margin-top:calc(var(--pitch) / 4); margin-bottom:2.3rem }
+#buku-sndiy .editor-note, #buku-sndiy .kotlin-example { color:#514a40; font:.94rem/1.45 var(--hand) }
+#buku-sndiy .editor-note { margin-left:clamp(.65rem,5%,2rem); max-width:26ch }
+#buku-sndiy .kotlin-example a { padding:.15rem 0 }
+@container writing (min-width:30rem) {
+  #buku-sndiy .editor-example { display:grid; grid-template-columns:calc(18rem + clamp(.65rem,5%,2rem)) 1fr; align-items:start }
+  #buku-sndiy .editor-example .index-print { width:18rem; margin-left:auto; margin-right:0 }
+  #buku-sndiy .editor-note { position:relative; margin:2.7rem 0 0 2rem }
+  #buku-sndiy .editor-note::before { content:""; position:absolute; top:1.3em; right:calc(100% + .25rem); width:1.6rem; height:.5rem; border-bottom:1px solid #776d5c; border-radius:50%; transform:rotate(-16deg); pointer-events:none }
+}
+/* Saat membuka fragmen Karya, tampilkan tepi atas lembar beserta tabnya. */
+#buku-sndiy.paginated .sheets > :is(.project-note,#daftar-isi) { scroll-margin-block-start:100vh }
+#buku-sndiy .project-note h1:focus { outline:none }
+#buku-sndiy .project-copy .link { min-height:44px; font:600 .87rem/1.4 var(--body); padding:.55rem 0 }
+#buku-sndiy .project-body > .project-fallback { width:100%; min-width:0 }
+#buku-sndiy .project-fallback > a:first-child { display:block; width:fit-content; max-width:100%; margin-inline:auto }
+
+
+/* Tentang saya */
+#buku-sndiy .folio.profile-folio,
+#buku-sndiy:not(.paginated) .folio.profile-folio {
+  block-size:157.142857cqw;
+  grid-template-rows:clamp(27px,7cqw,51px) minmax(0,1fr) clamp(20px,4cqw,32px);
+}
+#buku-sndiy .profile-folio main { padding-top:2cqw }
+#buku-sndiy.paginated .profile-folio .sheets { block-size:auto; column-count:auto; overflow:visible }
+#buku-sndiy .profile > p { max-width:36ch }
+#buku-sndiy .skills { margin-top:calc(var(--pitch) / 2) }
+#buku-sndiy .skill-groups {
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  align-items:start;
+  gap:var(--pitch) clamp(1rem,var(--pitch),2rem);
+}
+#buku-sndiy .skill-group { max-width:100%; break-inside:avoid }
+#buku-sndiy .skill-group h3 { margin:0; color:var(--ink); font:400 .94rem/var(--pitch) var(--hand) }
+#buku-sndiy .skill-list {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:.25rem;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+#buku-sndiy .skill-list li {
+  --scrap-edge:polygon(2% 3%,14% 5%,21% 1%,39% 4%,53% 0,66% 3%,78% 1%,95% 4%,100% 14%,97% 31%,100% 47%,97% 63%,99% 84%,95% 98%,79% 97%,68% 100%,50% 96%,34% 100%,23% 97%,10% 100%,2% 91%,4% 75%,0 57%,3% 43%,0 27%);
+  transform:rotate(-2deg);
+  filter:drop-shadow(0 1px 1px #533e2538);
+  break-inside:avoid;
+}
+#buku-sndiy .skill-list li:nth-child(2) {
+  --scrap-edge:polygon(0 9%,10% 2%,26% 4%,40% 0,63% 2%,85% 0,98% 7%,100% 33%,97% 50%,100% 79%,97% 96%,82% 100%,62% 96%,40% 100%,17% 97%,4% 100%,1% 83%,3% 65%,0 38%);
+  transform:rotate(1deg);
+}
+#buku-sndiy .skill-list li:nth-child(3) {
+  --scrap-edge:polygon(3% 2%,24% 0,39% 4%,59% 1%,83% 4%,98% 0,97% 19%,100% 40%,97% 70%,99% 91%,92% 100%,73% 98%,50% 100%,31% 96%,15% 99%,2% 95%,0 81%,3% 55%,1% 34%);
+  transform:rotate(-1deg);
+}
+#buku-sndiy .skill-paper {
+  display:grid;
+  justify-items:center;
+  align-content:center;
+  gap:.15rem;
+  min-width:2.75rem;
+  padding:.4rem .45rem;
+  background:linear-gradient(165deg,#fffcf1 8%,#f4ebd8 100%);
+  clip-path:var(--scrap-edge);
+  font:.86rem/1.35 var(--hand);
+  text-align:center;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+#buku-sndiy.paginated .skill-paper {
+  touch-action:none;
+  cursor:grab;
+  translate:var(--skill-drag,0 0);
+}
+#buku-sndiy .skill-list li.is-dragging { z-index:1; filter:drop-shadow(1px 4px 4px #533e2548) }
+#buku-sndiy .skill-list li.is-dragging .skill-paper { cursor:grabbing; transition:none }
+#buku-sndiy .skill-paper img { display:block; width:1.5rem; height:1.5rem; pointer-events:none }
+@media (prefers-reduced-motion:no-preference) and (update:fast) {
+  #buku-sndiy .skill-paper { transition:transform 190ms ease-out, translate 260ms cubic-bezier(.22,.72,.38,1.12) }
+  #buku-sndiy .skill-list li.is-lifted .skill-paper {
+    transform:translateY(var(--skill-lift)) rotate(var(--skill-tilt));
+  }
+}
+#buku-sndiy main .contact-shortcut { padding:0; white-space:nowrap }
+#buku-sndiy .profile-closing { width:min(100%,22rem); margin:var(--pitch) 0 0 auto; break-inside:avoid }
+#buku-sndiy .author-credit { width:min(100%,22rem); display:flex; justify-content:flex-end; padding:.45rem .6rem .3rem }
+/* Cap oval sekitar 44 mm pada bidang tulis F4 selebar 168-171 mm. */
+#buku-sndiy .author-stamp { display:block; width:26cqw; max-width:100%; aspect-ratio:188 / 102; background:url("../cap-haydar.svg") center / contain no-repeat; pointer-events:none; -webkit-user-select:none; user-select:none; transform:rotate(-7deg); mix-blend-mode:multiply }
+#buku-sndiy .contact-mount {
+  position:relative;
+  width:min(100%,22rem);
+  padding:.3rem;
+  break-inside:avoid;
+}
+#buku-sndiy .contact-mount::before, #buku-sndiy .contact-mount::after {
+  content:"";
+  position:absolute;
+  z-index:1;
+  width:1.2rem;
+  height:1.2rem;
+  pointer-events:none;
+  background:linear-gradient(135deg,var(--paper) 43%,#978973 49%,#645748 51%,transparent 54%);
+}
+#buku-sndiy .contact-mount::before { top:0; left:0 }
+#buku-sndiy .contact-mount::after { bottom:0; right:0; transform:rotate(180deg) }
+#buku-sndiy .contact-card {
+  padding:.65rem clamp(.65rem,3cqw,1.2rem);
+  background:linear-gradient(115deg,#f5e8ce,#ecdbb8);
+  border:1px solid #cbbb9c;
+  box-shadow:1px 2px 4px #402c2030;
+  color:var(--ink);
+  font:normal 1rem/1.4 var(--hand);
+}
+#buku-sndiy .contact-card h2 { margin:0 0 .35rem; font:600 1.28rem/1.45 var(--hand) }
+#buku-sndiy .contact-card:has(#kontak:is(:focus,:target)) { border-color:var(--pen) }
+#buku-sndiy .contact-card a {
+  display:grid;
+  grid-template-columns:1.15rem minmax(0,1fr);
+  align-content:center;
+  align-items:center;
+  gap:0 .55rem;
+  padding:.35rem 0;
+  min-height:44px;
+  text-decoration:none;
+}
+#buku-sndiy .contact-card a svg { width:1.1rem; height:1.1rem; grid-row:span 2 }
+#buku-sndiy .contact-channel { color:var(--ink); font-size:.87rem }
+#buku-sndiy .contact-value { grid-column:2; overflow-wrap:anywhere; text-decoration:underline; text-underline-offset:.17em }
+@media (hover:hover) { #buku-sndiy .contact-card a:hover .contact-value { text-decoration-thickness:2px } }
+
+@container writing (min-width:30rem) {
+  #buku-sndiy .skill-groups { grid-template-columns:repeat(2,minmax(0,1fr)) }
+  #buku-sndiy .contents li > a { grid-template-columns:minmax(10rem,1fr) minmax(0,2fr); column-gap:1.25rem }
+  #buku-sndiy .project-body { display:grid; grid-template-columns:minmax(0, .88fr) minmax(0, 1.12fr); align-items:start; column-gap:6% }
+  #buku-sndiy .pocket { width:100%; margin-top:0 }
+}
+@container writing (min-width:34rem) {
+  #buku-sndiy .spread { display:grid; grid-template-columns:minmax(0,1fr) 13rem; align-items:start; column-gap:var(--pitch) }
+  #buku-sndiy .spread > h1 { grid-column:1 / -1 }
+  #buku-sndiy .portrait-mount { width:100%; margin:0 }
+}
+@media (max-width:26rem) {
+  #buku-sndiy .print.stacked .photo-trigger::after { content:""; position:absolute; inset:0 auto 0 50%; width:max(100%,44px); transform:translateX(-50%) }
+  #buku-sndiy .paper-tabs { padding-inline:4% }
+  #buku-sndiy .paper-tabs a { flex:1 }
+  #buku-sndiy .spread > h1 { font-size:clamp(1.625rem,8.2vw,2rem) }
+  #buku-sndiy .signature { width:9rem }
+  #buku-sndiy .portrait-mount .print-label { inset:100% auto auto 50%; width:max-content; transform:translateX(-50%) }
+  #buku-sndiy .portrait-mount .photo-hint { display:none }
+  #buku-sndiy .pocket { margin-block:.3rem; height:min(12.4rem,var(--column-height,12.4rem)) }
+}
+
+@media (max-width:22rem) {
+  #buku-sndiy .contact-card { padding:.35rem .5rem; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:.3rem }
+  #buku-sndiy .contact-card > :is(h2,p,a[href^="mailto:"]) { grid-column:1 / -1 }
+  #buku-sndiy .contact-card a:not([href^="mailto:"]) { column-gap:.2rem; grid-template-columns:.85rem minmax(0,1fr) }
+  #buku-sndiy .contact-card a:not([href^="mailto:"]) svg { width:.85rem }
+  #buku-sndiy .author-credit { padding-block:.1rem }
+  #buku-sndiy .author-stamp { transform:rotate(-4deg) }
+  #buku-sndiy .contact-card p { font-size:.9rem; line-height:1.35 }
+  #buku-sndiy .contact-card a { padding:.12rem 0; line-height:1.2 }
+  #buku-sndiy .contact-value { font-size:.89rem }
+  #buku-sndiy .folio { --left-edge:calc(100% * 24 / 210); --right-edge:calc(100% * 15 / 210) }
+  #buku-sndiy main h1 { font-size:max(1.65rem,8.2vw) }
+  #buku-sndiy .spread > h1 { margin-bottom:calc(var(--pitch) / 4) }
+  #buku-sndiy .portrait-mount { padding-bottom:1.6rem }
+  #buku-sndiy .portrait-mount .print-label { padding:0 }
+  #buku-sndiy .index-print { width:62%; margin-block:calc(var(--pitch) / 3) 1.85rem }
+  #buku-sndiy .index-print .photo-hint { display:inline-flex }
+  #buku-sndiy .contents { margin-top:calc(var(--pitch) / 2) }
+  #buku-sndiy .pocket { height:min(10.45rem,var(--column-height,10.45rem)) }
+  #buku-sndiy .page-controls button { font-size:0 }
+  #buku-sndiy .page-controls button::before { font:1rem/1 var(--body) }
+  #buku-sndiy .page-controls [data-turn="-1"]::before { content:"\2190" }
+  #buku-sndiy .page-controls [data-turn="1"]::before { content:"\2192" }
+  #buku-sndiy .skill-groups { column-gap:.65rem }
+}
+
+
+
+/* Ukuran tulisan dan tempelan mengikuti lebar bidang tulis pada satu lembar F4. */
+#buku-sndiy .profile { --baris:4.76cqw }
+#buku-sndiy .profile h1 { font-size:7cqw; line-height:calc(2 * var(--baris)); margin-bottom:var(--baris) }
+#buku-sndiy .profile > p { max-width:100%; font-size:3.45cqw; line-height:var(--baris) }
+#buku-sndiy .profile .skills { margin-top:var(--baris) }
+#buku-sndiy .profile .skills h2 { font-size:4.8cqw; line-height:1.6 }
+#buku-sndiy .profile .skill-groups { grid-template-columns:1fr; gap:2cqw }
+#buku-sndiy .profile .skill-group { display:grid; grid-template-columns:25% 1fr; gap:1cqw 2cqw; align-items:center }
+#buku-sndiy .profile .skill-group h3 { font-size:3.4cqw; line-height:1.3 }
+#buku-sndiy .profile .skill-list { gap:1cqw }
+#buku-sndiy .profile .skill-paper { display:flex; align-items:center; min-width:0; padding:1.1cqw .8cqw; gap:.6cqw; font-size:3.25cqw; line-height:1.18 }
+#buku-sndiy .profile .skill-paper img { width:4.7cqw; height:4.7cqw }
+#buku-sndiy .profile .skill-group:has(.kotlin-example) > ul { justify-content:space-between }
+#buku-sndiy .profile .kotlin-example {
+  grid-column:2; justify-self:end; position:relative; width:fit-content; max-width:100%;
+  padding:1.6cqw 2cqw 0 0; text-align:right; text-wrap:pretty; font-size:3.3cqw; line-height:1.4;
+}
+#buku-sndiy .profile .kotlin-example::before {
+  content:""; position:absolute; top:0; right:5cqw; width:2cqw; height:1.4cqw;
+  border-right:1px solid #847866; border-bottom:1px solid #847866; border-bottom-right-radius:100%;
+  pointer-events:none;
+}
+#buku-sndiy .profile .kotlin-example a { padding:0 }
+#buku-sndiy .profile-closing { width:89%; margin-top:3cqw }
+#buku-sndiy .profile .contact-mount { width:100%; padding:1cqw }
+#buku-sndiy .profile .contact-card { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.6cqw 1cqw; padding:2cqw 3cqw }
+#buku-sndiy .profile .contact-card > :is(h2,p,a[href^="mailto:"]) { grid-column:1 / -1 }
+#buku-sndiy .profile .contact-card h2 { margin:0; font-size:4.6cqw; line-height:1.35 }
+#buku-sndiy .profile .contact-card p { margin:0; font-size:3.25cqw; line-height:1.35 }
+#buku-sndiy .profile .contact-card a { min-height:0; padding:.6cqw 0; grid-template-columns:3.5cqw 1fr; gap:0 1cqw; line-height:1.3 }
+#buku-sndiy .profile .contact-card a svg { width:3.5cqw; height:3.5cqw }
+#buku-sndiy .profile .contact-channel, #buku-sndiy .profile .contact-value { font-size:3.1cqw }
+#buku-sndiy .profile .author-credit { width:100%; padding:1cqw; align-items:center; justify-content:space-between }
+#buku-sndiy .author-credit a { font:clamp(.8rem,3cqw,1rem)/1.4 var(--hand); text-decoration-thickness:1px }
+/* Satu langkah tulisan sama dengan 8 mm pada garis SVG folio. */
+#buku-sndiy:not(.paginated) .credits-folio {
+  grid-template-rows:0 auto 1fr;
+  aspect-ratio:210 / 330;
+}
+#buku-sndiy .asset-credits {
+  container-type:normal;
+  --line:calc(100cqw * 8 / 210);
+  padding-top:var(--line);
+  font:min(1.15rem,calc(var(--line) * 1.02))/var(--line) var(--hand);
+}
+#buku-sndiy .asset-credits h1 {
+  margin:0; font-size:min(2.6rem,calc(var(--line) * 1.7)); line-height:calc(2 * var(--line));
+}
+/* Turunkan tinta sebesar ruang di bawah baseline font Coming Soon. */
+#buku-sndiy .asset-credits h1 { position:relative; top:calc(var(--line) - .26em) }
+#buku-sndiy .asset-credits :is(dl,.credits-back) { position:relative; top:calc(var(--line) / 2 - .26em) }
+#buku-sndiy .asset-credits dl { margin:var(--line) 0 0 }
+#buku-sndiy .asset-credits dt { color:var(--pen); font-weight:600 }
+#buku-sndiy .asset-credits dd { margin:0 0 var(--line) }
+#buku-sndiy .asset-credits dd a { display:inline; padding:0; text-underline-offset:.16em }
+#buku-sndiy .asset-credits .credits-back { display:block; width:fit-content; padding:0; font-weight:600 }
+
+/* Cetakan Karya yang dapat dibuka lewat tautan HTML biasa. */
+#buku-sndiy .project-prints figure { margin:var(--pitch) 0; text-align:center }
+#buku-sndiy .project-prints .print {
+  display:block; margin:auto; --tilt:0deg;
+  width:min(100%,calc(65vh * var(--width-per-height)),calc(100cqw * var(--width-per-height)));
+}
+#buku-sndiy .project-prints figcaption { margin-top:.65rem; font:1rem/1.4 var(--hand) }
+@supports selector(:has(:target)) {
+  #buku-sndiy .project-prints section:not(:first-child,:target,:has(:target)),
+  #buku-sndiy .project-prints:has(:target) section:first-child:not(:target),
+  #buku-sndiy .project-prints #foto-daftar-isi:not(:target),
+  #buku-sndiy .project-prints section:has(#foto-daftar-isi:target) .back-project { display:none }
+}
+#buku-sndiy .project-prints :target { scroll-margin-block-start:100vh }

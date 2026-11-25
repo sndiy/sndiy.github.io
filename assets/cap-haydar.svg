@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188 102">
+  <defs><path id="arc" d="M35 37 Q94 5 153 37"/></defs>
+  <g fill="none" stroke="#625049">
+    <path stroke-width="2.4" d="M17 76 C-2 59 6 35 28 22 C66 -1 129 1 164 24 C191 42 184 67 160 81 C125 102 54 102 20 79"/>
+    <ellipse cx="94" cy="51" rx="81" ry="40" stroke-width=".85" stroke-dasharray="299 3 84 8"/>
+    <path d="M20 53l7 -1m134 0 7 -1" stroke-width="1.8"/>
+  </g>
+  <text fill="#584940" font-family="Georgia,serif" font-size="12" letter-spacing="2.2" text-anchor="middle"><textPath href="#arc" startOffset="50%">DIBUAT OLEH</textPath></text>
+  <g transform="translate(36 33) scale(.56)" fill="none" stroke="#52433d" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 19 C15 20 29 8 25 5 C21 2 12 29 7 52"/>
+    <path d="M4 38 C14 34 29 31 43 32"/>
+    <path d="M42 10 C50 1 55 5 49 15 C42 27 32 43 34 49 C36 54 41 50 46 44"/>
+    <path d="M46 44 C51 36 58 29 64 33 C69 38 58 52 51 50 C43 48 54 31 67 32 C64 38 58 52 66 49 C72 47 77 39 81 32 C78 40 72 52 81 49 C87 47 93 38 97 31 C94 43 84 72 76 75 C66 79 68 68 80 58 C88 51 96 48 104 40"/>
+    <path d="M104 40 C110 33 118 29 122 33 C127 39 115 52 107 49 C99 46 111 31 124 32 C132 22 146 6 140 6 C134 6 123 31 121 43 C118 55 129 49 138 39 C145 32 151 29 155 32 C162 37 151 49 144 48 C136 47 145 31 160 31 C154 40 152 51 160 47 C169 42 171 33 179 29 C180 31 175 39 172 47 C180 38 184 30 189 30 C189 36 194 39 208 29"/>
+    <path d="M8 62 C55 62 125 55 204 56"/>
+  </g></svg>
