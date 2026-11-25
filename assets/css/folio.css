@@ -75,7 +75,7 @@ body { margin:0; padding:0 }
   to { opacity:1; stroke-dashoffset:0 }
 }
 #buku-sndiy .link, #buku-sndiy main a { display:inline-block; padding:8px 0; color:var(--pen); text-decoration:underline; text-underline-offset:4px }
-#buku-sndiy .pocket { position:relative; isolation:isolate; break-inside:avoid; margin:calc(var(--pitch) / 2) auto .55rem; height:min(clamp(12.8rem,42vw,20rem),var(--column-height,20rem)); max-width:34rem; --peek:3.3rem; --lift:0; }
+#buku-sndiy .pocket { position:relative; container-type:inline-size; isolation:isolate; break-inside:avoid; margin:calc(var(--pitch) / 2) auto .55rem; height:min(clamp(12.8rem,42vw,20rem),var(--column-height,20rem)); max-width:34rem; --peek:3.3rem; --lift:0; }
 #buku-sndiy .print-stage { position:relative; top:2%; margin-inline:2%; height:calc(98% - var(--peek) - 2.6rem); container-type:size; display:grid; place-items:end center }
 #buku-sndiy .print-stage :is(.print,.stack-layer) { width:min(var(--print-width),94cqw,calc(90cqh * var(--photo-ratio))); }
 #buku-sndiy .print { --tilt:-2deg; position:relative; aspect-ratio:var(--photo-ratio); margin:0; border:1px solid transparent; transform:rotate(var(--tilt)) }
@@ -155,14 +155,14 @@ html.photo-open { overflow:hidden }
 }
 #buku-sndiy .project-note h2 { margin-top:var(--pitch) }
 #buku-sndiy .opening { position:absolute; inset:0; overflow:hidden; pointer-events:none }
-#buku-sndiy .insert { --rule-offset:20px; pointer-events:auto; position:absolute; inset:3px 4% 0; display:grid; grid-template-rows:auto minmax(0,1fr); padding:0 5% .55rem; color:#233f4a; background-color:#dce8e7; background-image:repeating-linear-gradient(to bottom,#7e9aa438 var(--rule-offset) calc(var(--rule-offset) + 1px),transparent calc(var(--rule-offset) + 1px) calc(var(--rule-offset) + var(--folio-rule))); box-shadow:1px 2px 7px #342e264f; border:1px solid #aabfc0; border-radius:2px 3px 0 0; transform:translateY(calc((1 - var(--lift)) * (100% - var(--peek)) - var(--hint,0px))); }
+#buku-sndiy .insert { --insert-leading:clamp(1.05rem,6cqw,1.45rem); --rule-offset:0px; pointer-events:auto; position:absolute; inset:3px 4% 0; display:grid; grid-template-rows:auto minmax(0,1fr); padding:0 5% .55rem; color:#233f4a; background-color:#dce8e7; background-image:repeating-linear-gradient(to bottom,#7e9aa438 var(--rule-offset) calc(var(--rule-offset) + 1px),transparent calc(var(--rule-offset) + 1px) calc(var(--rule-offset) + var(--insert-leading))); box-shadow:1px 2px 7px #342e264f; border:1px solid #aabfc0; border-radius:2px 3px 0 0; transform:translateY(calc((1 - var(--lift)) * (100% - var(--peek)) - var(--hint,0px))); }
 @media (prefers-reduced-motion:no-preference) and (update:fast) { #buku-sndiy .pocket:not(.dragging) .insert { transition:transform 420ms cubic-bezier(.22,.72,.2,1) } }
-#buku-sndiy .handle { display:block; width:100%; height:var(--peek); padding:0; color:#234754; text-align:left; touch-action:none; user-select:none; cursor:grab; font:400 max(17px,1.0625rem)/1.3 var(--hand); }
+#buku-sndiy .handle { display:block; width:100%; height:var(--peek); padding:0; color:#234754; text-align:left; touch-action:none; user-select:none; cursor:grab; font:400 clamp(.8rem,5.1cqw,1rem)/1.35 var(--hand); }
 #buku-sndiy .dragging .handle {cursor:grabbing}
 @media(hover:hover) and (prefers-reduced-motion:no-preference) and (update:fast) { #buku-sndiy .pocket:not(.dragging):not(.opened) .insert:has(.handle:hover) { --hint:4px } }
 
 #buku-sndiy .pocket::after { content:""; pointer-events:none; position:absolute; inset:auto 0 -3px; height:7px; background:linear-gradient(#514238,#756554 55%,#cfbfa4 75%,var(--paper)); clip-path:polygon(0 50%,5% 40%,10% 65%,16% 27%,19% 40%,30% 20%,36% 55%,43% 24%,49% 53%,56% 25%,64% 55%,70% 30%,77% 58%,85% 27%,92% 48%,100% 35%,99% 82%,71% 89%,50% 80%,25% 95%,2% 86%) }
-#buku-sndiy .insert-text { min-height:0; overflow:auto; font:max(18px,1.125rem)/var(--pitch) var(--hand); background:transparent; }
+#buku-sndiy .insert-text { min-height:0; overflow:auto; padding-block:.32em .1em; font:clamp(.76rem,4.8cqw,.98rem)/var(--insert-leading) var(--hand); background:transparent; }
 #buku-sndiy .insert-text:focus-visible { outline:2px solid var(--pen); outline-offset:-2px }
 #buku-sndiy button, #buku-sndiy nav { max-inline-size:100%; overflow-wrap:anywhere }
 #buku-sndiy .font-probe { position:absolute; width:1rem; height:1em; visibility:hidden; pointer-events:none }
@@ -420,7 +420,8 @@ html.photo-open { overflow:hidden }
   #buku-sndiy .index-print { width:62%; margin-block:calc(var(--pitch) / 3) 1.85rem }
   #buku-sndiy .index-print .photo-hint { display:inline-flex }
   #buku-sndiy .contents { margin-top:calc(var(--pitch) / 2) }
-  #buku-sndiy .pocket { height:min(10.45rem,var(--column-height,10.45rem)) }
+  #buku-sndiy .pocket { height:min(13.45rem,var(--column-height,13.45rem)) }
+  #buku-sndiy .pocket .print-stage { max-height:calc(10.45rem * .98 - var(--peek) - 2.6rem) }
   #buku-sndiy .page-controls button { font-size:0 }
   #buku-sndiy .page-controls button::before { font:1rem/1 var(--body) }
   #buku-sndiy .page-controls [data-turn="-1"]::before { content:"\2190" }

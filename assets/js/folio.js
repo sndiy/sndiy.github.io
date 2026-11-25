@@ -50,7 +50,7 @@
     if (!baseline) return;
     const sheet = text.parentElement;
     const origin = sheet.getBoundingClientRect().top + sheet.clientTop;
-    const pitch = parseFloat(getComputedStyle(text).getPropertyValue('--folio-rule'));
+    const pitch = parseFloat(getComputedStyle(text).lineHeight);
     const offset = ((baseline.top - origin) % pitch + pitch) % pitch;
     sheet.style.setProperty('--rule-offset',offset + 'px');
   }
