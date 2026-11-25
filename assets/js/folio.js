@@ -5,10 +5,12 @@
   if (album && !album.showModal) return;
   const paper = book.querySelector('main');
   const sheets = paper.querySelector('.sheets');
+  const folio = book.querySelector('.folio');
+  const singleSheet = folio.matches('.single-folio,.profile-folio');
   let sheetIndex = 0;
   const readingPlaces = new Map();
   sheets.addEventListener('focusin',event => {
-    if (event.target.hasAttribute('data-content')) return;
+    if (singleSheet || event.target.hasAttribute('data-content')) return;
     const width = sheets.getBoundingClientRect().width;
     const box = event.target.getClientRects()[0];
     if (width && box) updateSheets(Math.floor((box.left - sheets.getBoundingClientRect().left + sheets.scrollLeft + 1) / width));
@@ -16,7 +18,7 @@
   function updateSheets(index = sheetIndex) {
     const width = sheets.getBoundingClientRect().width;
     if (!width) return;
-    const count = Math.max(1,Math.round(sheets.scrollWidth / width));
+    const count = singleSheet ? 1 : Math.max(1,Math.round(sheets.scrollWidth / width));
     sheetIndex = Math.max(0,Math.min(count - 1,index));
     sheets.scrollLeft = sheetIndex * width;
     book.querySelector('.page-controls').hidden = count === 1;
@@ -35,7 +37,6 @@
   book.classList.add('paginated');
   const notes = [...paper.querySelectorAll('h1:not(.signed-heading),h2,p,.contents strong,.skill-group h3')].filter(el => !el.closest('aside,.contact-card'));
   const inserts = [...paper.querySelectorAll('.insert-text')];
-  const folio = book.querySelector('.folio');
   const ruling = folio.querySelector('.ruling');
   for (const note of [...notes,...inserts]) {
     const marker = document.createElement('span');
